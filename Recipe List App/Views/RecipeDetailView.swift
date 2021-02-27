@@ -2,7 +2,7 @@
 //  RecipeDetailView.swift
 //  Recipe List App
 //
-//  Created by Christopher Ching on 2021-01-14.
+//  Created by Arshmeet Sodhi on 2021-01-14.
 //
 
 import SwiftUI

@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Recipe List App
 //
-//  Created by Christopher Ching on 2021-01-14.
+//  Created by Arshmeet Sodhi on 2021-01-14.
 //
 
 import SwiftUI
@@ -15,29 +15,39 @@ struct RecipeListView: View {
     var body: some View {
         
         NavigationView {
-            List(model.recipes) { r in
+            VStack(alignment: .leading) {
+                Text("All Recipes")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, 40)
                 
-                NavigationLink(
-                    destination: RecipeDetailView(recipe:r),
-                    label: {
-                        
-                        // MARK: Row item
-                        HStack(spacing: 20.0) {
-                            Image(r.image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 50, height: 50, alignment: .center)
-                                .clipped()
-                                .cornerRadius(5)
-                            Text(r.name)
-                        }
-                        
-                    })
-                
-                
-                
+                ScrollView {
+                    
+                    LazyVStack(alignment: .leading) {
+                            ForEach(model.recipes) { r in
+                        NavigationLink(
+                            destination: RecipeDetailView(recipe:r),
+                            label: {
+                                
+                                // MARK: Row item
+                                HStack(spacing: 20.0) {
+                                    Image(r.image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 50, height: 50, alignment: .center)
+                                        .clipped()
+                                        .cornerRadius(5)
+                                    Text(r.name)
+                                }
+                                
+                            })
+                    
+                }
+                    }
+                }
             }
-            .navigationBarTitle("All Recipes")
+            .padding(.leading)
+            .navigationBarHidden(true)
         }
     }
 }
@@ -45,5 +55,6 @@ struct RecipeListView: View {
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeListView()
+            .environmentObject(RecipeModel())
     }
 }
