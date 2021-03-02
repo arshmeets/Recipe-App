@@ -11,6 +11,7 @@ struct RecipeFeaturedView: View {
     
     //Creating the instance of the Recipe Model Class
     @EnvironmentObject var model:RecipeModel
+    @State var isDetailViewShowing = false
     
     var body: some View {
         
@@ -21,39 +22,52 @@ struct RecipeFeaturedView: View {
                 .padding(.leading)
                 .padding(.top, 40)
             
-        GeometryReader { geo in
-            
-            TabView{
+            GeometryReader { geo in
                 
-                //Loop thorugh each recipe
-                ForEach (0..<model.recipes.count) { index in
+                TabView{
                     
-                    //Check which recipes are featured to display
-                    if model.recipes[index].featured {
+                    //Loop thorugh each recipe
+                    ForEach (0..<model.recipes.count) { index in
                         
-                        //Recipe card
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(.white)
-                            VStack(spacing: 0) {
-                                Image(model.recipes[index].image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .clipped()
-                                Text(model.recipes[index].name)
-                                    .padding(5)
+                        //Check which recipes are featured to display
+                        if model.recipes[index].featured {
+                            
+                            //Recipe Card Button
+                            Button(action: {
+                                
+                                //Show the recipe detail sheet
+                                self.isDetailViewShowing = true
+                            }, label: {
+                                //Recipe card
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.white)
+                                    VStack(spacing: 0) {
+                                        Image(model.recipes[index].image)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .clipped()
+                                        Text(model.recipes[index].name)
+                                            .padding(5)
+                                    }
+                                }
+                                
+                            })
+                            .sheet(isPresented: $isDetailViewShowing) {
+                                // Show the recipe detail view
+                                RecipeDetailView(recipe: model.recipes[index])
                             }
+                            .buttonStyle(PlainButtonStyle())
+                            .frame(width: geo.size.width-40, height: geo.size.height-100, alignment: .center)
+                            .cornerRadius(15)
+                            .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.5), radius: 10, x: -5, y: 5)
                         }
-                        .frame(width: geo.size.width-40, height: geo.size.height-100, alignment: .center)
-                        .cornerRadius(15)
-                        .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.5), radius: 10, x: -5, y: 5)
+                        
                     }
-                    
                 }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-        }
             
             VStack(alignment:.leading, spacing: 10) {
                 Text("Preparation Time:")
