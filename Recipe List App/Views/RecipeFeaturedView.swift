@@ -20,7 +20,7 @@ struct RecipeFeaturedView: View {
             
             Text("Featured Recipes")
                 .font(.largeTitle)
-                .fontWeight(.bold)
+                .font(Font.custom("Avenir Heavy", size: 30))
                 .padding(.leading)
                 .padding(.top, 40)
             
@@ -51,6 +51,7 @@ struct RecipeFeaturedView: View {
                                             .clipped()
                                         Text(model.recipes[index].name)
                                             .padding(5)
+                                            .font(Font.custom("Avenir", size: 18))
                                     }
                                 }
                                 
@@ -74,10 +75,10 @@ struct RecipeFeaturedView: View {
             
             VStack(alignment:.leading, spacing: 10) {
                 Text("Preparation Time:")
-                    .font(.headline)
+                    .font(Font.custom("Avenir Heavy", size: 16))
                 Text(model.recipes[tabSelectionIndex].prepTime)
                 Text("Highlights:")
-                    .font(.headline)
+                    .font(Font.custom("Avenir Heavy", size: 16))
                 RecipeHighlights(highlights:model.recipes[tabSelectionIndex].highlights)
             }
             .padding([.leading, .bottom])
@@ -90,7 +91,7 @@ struct RecipeFeaturedView: View {
     func setFeaturedIndex() {
         
         //Find the first recipe that is featured
-        var index = model.recipes.firstIndex { (recipe) -> Bool in
+        let index = model.recipes.firstIndex { (recipe) -> Bool in
             return recipe.featured
         }
         tabSelectionIndex = index ?? 0

@@ -28,11 +28,12 @@ struct RecipeDetailView: View {
                     .bold()
                     .padding(.top, 20)
                     .padding(.leading)
-                    .font(.largeTitle)
+                    .font(Font.custom("Avenir Heavy", size: 30))
                 
                 // MARK: Serving Size Picker
                 VStack(alignment: .leading) {
                     Text("Select your serving size:")
+                        .font(Font.custom("Avenir", size: 18))
                     
                     Picker("", selection:$selectedServingSize) {
                         Text("2").tag(2)
@@ -48,7 +49,7 @@ struct RecipeDetailView: View {
                 // MARK: Ingredients
                 VStack(alignment: .leading) {
                     Text("Ingredients")
-                        .font(.headline)
+                        .font(Font.custom("Avenir Heavy", size: 16))
                         .padding([.bottom, .top], 5)
                     
                     ForEach (recipe.ingredients) { item in
@@ -63,7 +64,7 @@ struct RecipeDetailView: View {
                 // MARK: Directions
                 VStack(alignment: .leading) {
                     Text("Directions")
-                        .font(.headline)
+                        .font(Font.custom("Avenir Heavy", size: 16))
                         .padding([.bottom, .top], 5)
                     
                     ForEach(0..<recipe.directions.count, id: \.self) { index in
